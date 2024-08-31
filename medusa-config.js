@@ -66,6 +66,26 @@ const plugins = [
       // webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
     },
   },
+  {
+    resolve: "medusa-plugin-smtp",
+
+    options: {
+      fromEmail: process.env.SMTP_FROM_EMAIL,
+      transport: {
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
+        secure: false,
+        auth: {
+          user: process.env.SMTP_AUTH_USER,
+          pass: process.env.SMTP_AUTH_PASS,
+        }
+      },
+      emailTemplatePath: "data/emailTemplates",
+      templateMap: {
+        "order.placed": "orderplaced",
+      },
+    }
+  }
 ];
 
 const modules = {
