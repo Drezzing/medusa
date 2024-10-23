@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@agilo/medusa-file-r2": "github:Agilo/medusa-file-r2",
-    "@medusajs/admin": "^7.1.15",
+    "@medusajs/admin": "^7.1.17",
     "@medusajs/cache-redis": "^1.9.2",
     "@medusajs/event-bus-redis": "^1.8.14",
     "@medusajs/medusa": "^1.20.8",
