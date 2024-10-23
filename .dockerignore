@@ -10,7 +10,7 @@ Dockerfile
 
 .cache
 .github
-data
+data/seed*.json
 dist
 uploads
 node_modules
