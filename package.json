@@ -40,7 +40,7 @@
     "medusa-payment-stripe": "6.0.10",
     "medusa-plugin-smtp": "^1.2.0",
     "prism-react-renderer": "^2.0.4",
-    "typeorm": "0.3.16"
+    "typeorm": "0.3.21"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
