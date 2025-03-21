@@ -9,22 +9,20 @@ html(lang="fr")
         - var dateDay = new Date(data.created_at).toLocaleDateString("fr-FR", {dateStyle: "short"})
         - var dateTime = new Date(data.created_at).toLocaleTimeString("fr-FR", {timeStyle: "medium"})
 
-        div(style="max-width: 700px; margin: auto;")
-            div(style="padding: 4px;")
-                p Bonjour #{data.billing_address.first_name},
-                p Nous avons bien reçu votre commande et elle est en cours de traitement.
-                div(style="margin-top: 4px;")
-                    p(style="margin: 1px") Commande #{orderID}
-                    p(style="margin: 1px") Passée le #{dateDay} à #{dateTime}
-                    div(style="margin-top: 2px;")
-                        each item in data.items
-                            div(style="border-bottom: 2px solid #181818; padding-top: 2px;")
-                                p 
-                                    strong #{item.title} (#{item.description})
-                                    |  - Quantité : #{item.quantity}
-                p(style="margin-top: 4px;")
-                    strong Total :
-                    |  #{data.total}
-                p(style="margin-top: 4px;") Si vous avez des questions, n'hésitez pas à nous contacter à l'adresse contact@drezzing.fr.
-            div(style="text-align: center; padding-top: 2px; color: #666; font-size: small;")
-                p &copy; 2024 DreZZing. Tous droits réservés.
+        div(style="max-width: 700px; margin: auto; padding: 4px;")
+            p Bonjour #{data.billing_address.first_name},
+            p Nous avons bien reçu votre commande et elle est en cours de traitement.
+            div(style="margin-top: 4px;")
+                p(style="margin: 1px") Commande #{orderID}
+                p(style="margin: 1px") Passée le #{dateDay} à #{dateTime}
+                div(style="margin-top: 2px;")
+                    each item in data.items
+                        div(style="border-bottom: 2px solid #181818; padding-top: 2px;")
+                            p 
+                                strong #{item.title} (#{item.description})
+                                |  - Quantité : #{item.quantity}
+            p(style="margin-top: 4px;")
+                strong Total :
+                |  #{data.total}
+
+            include ../footer.pug
