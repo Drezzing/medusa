@@ -1,4 +1,5 @@
 const dotenv = require("dotenv");
+const fs = require("fs");
 
 let ENV_FILE_NAME = "";
 switch (process.env.NODE_ENV) {
@@ -17,10 +18,16 @@ switch (process.env.NODE_ENV) {
     break;
 }
 
-try {
-  dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
-} catch (e) {
-  console.error(e)
+dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
+for (const [key, value] of Object.entries(process.env)) {
+  if (key.endsWith("_FILE")) {
+    try {
+      process.env[key.slice(0, -5)] = fs.readFileSync(value, "utf8");
+      delete process.env[key]
+    } catch (e) {
+      throw new Error(`Could not read file ${value} for env variable ${key}`);
+    }
+  }
 }
 
 // CORS when consuming Medusa from admin
@@ -83,6 +90,7 @@ const plugins = [
       emailTemplatePath: "data/emailTemplates",
       templateMap: {
         "order.placed": "orderplaced",
+        "invite.created": "invitecreated",
       },
     }
   }

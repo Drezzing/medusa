@@ -5,8 +5,8 @@ Dockerfile
 .gitignore
 .gitattributes
 
+.env
 .env.*
-!.env.prod
 
 .cache
 .github
