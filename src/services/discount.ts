@@ -38,7 +38,6 @@ class DiscountService extends MedusaDiscountService {
           // "rule.conditions.customer_groups",
         ],
       });
-      console.log(discount);
       const { type, value, allocation } = discount.rule;
 
       const calculationContext = await this.totalsService_
