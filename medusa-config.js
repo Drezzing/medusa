@@ -44,17 +44,6 @@ const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 const plugins = [
   `medusa-fulfillment-manual`,
   {
-    resolve: "@agilo/medusa-file-r2",
-    /** @type {import("@agilo/medusa-file-r2").} */
-    options: {
-      bucket: process.env.R2_BUCKET_NAME,
-      endpoint: process.env.R2_BUCKET_ENDPOINT,
-      access_key: process.env.R2_BUCKET_ACCESS_KEY,
-      secret_key: process.env.R2_BUCKET_SECRET_KEY,
-      public_url: process.env.R2_BUCKET_PUBLIC_URL,
-    },
-  },
-  {
     resolve: "@medusajs/admin",
     /** @type {import('@medusajs/admin').PluginOptions} */
     options: {
@@ -111,6 +100,17 @@ const modules = {
       redisOptions: {}
     }
   },
+  fileService: {
+    resolve: "./src/modules/file-r2/index.cjs",
+    options: {
+      bucket: process.env.R2_BUCKET_NAME,
+      endpoint: process.env.R2_BUCKET_ENDPOINT,
+      access_key: process.env.R2_BUCKET_ACCESS_KEY,
+      secret_key: process.env.R2_BUCKET_SECRET_KEY,
+      public_url: process.env.R2_BUCKET_PUBLIC_URL,
+    },
+  }
+
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
