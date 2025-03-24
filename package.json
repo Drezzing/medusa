@@ -1,6 +1,6 @@
 {
   "name": "drezzing-backend",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Backend of Drezzing's website, built with Medusa.js.",
   "author": "Drezzing (https://drezzing.fr)",
   "license": "MIT",
