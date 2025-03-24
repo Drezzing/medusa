@@ -13,6 +13,17 @@ const path = require("path");
 const stream = require("stream");
 
 /**
+ * @typedef {Object} R2StorageServiceOptions
+ * @property {string} bucket - The bucket name.
+ * @property {string} endpoint - The endpoint URL.
+ * @property {string} access_key - The access key.
+ * @property {string} secret_key - The secret key.
+ * @property {string} public_url - The public URL.
+ * @property {string} [cache_control="max-age=31536000"] - Cache-Control header value.
+ * @property {number} [presigned_url_expires=3600] - Expiration time in seconds for presigned URLs.
+ */
+
+/**
  * Service for handling file storage on R2.
  * Based on https://github.com/Agilo/medusa-file-r2
  * @class
@@ -23,14 +34,7 @@ class R2StorageService extends AbstractFileService {
    * Constructs the R2StorageService.
    *
    * @param {Object} container - The container object.
-   * @param {Object} options - Options for the service.
-   * @param {string} options.bucket - The bucket name.
-   * @param {string} options.endpoint - The endpoint URL.
-   * @param {string} options.access_key - The access key.
-   * @param {string} options.secret_key - The secret key.
-   * @param {string} options.public_url - The public URL.
-   * @param {string} [options.cache_control="max-age=31536000"] - Cache-Control header value.
-   * @param {number} [options.presigned_url_expires=3600] - Expiration time in seconds for presigned URLs.
+   * @param {R2StorageServiceOptions} options - Options for the service.
    * @throws {Error} When a required option is missing.
    */
   constructor(container, options) {
