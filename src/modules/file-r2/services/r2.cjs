@@ -1,3 +1,7 @@
+const fs = require("fs");
+const path = require("path");
+const stream = require("stream");
+
 const {
   DeleteObjectCommand,
   GetObjectCommand,
@@ -8,9 +12,7 @@ const {
 const { Upload } = require("@aws-sdk/lib-storage");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { AbstractFileService } = require("@medusajs/medusa");
-const fs = require("fs");
-const path = require("path");
-const stream = require("stream");
+const { DeleteFileType } = require("@medusajs/types")
 
 /**
  * @typedef {Object} R2StorageServiceOptions
@@ -151,7 +153,7 @@ class R2StorageService extends AbstractFileService {
   /**
    * Deletes a file from the R2 storage.
    *
-   * @param {Express.Multer.File} fileData - Object containing the fileKey property.
+   * @param {DeleteFileType} fileData - Object containing the fileKey property.
    * @returns {Promise<void>}
    * @throws {Error} If file deletion fails.
    */
