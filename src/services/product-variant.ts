@@ -44,7 +44,7 @@ class ProductVariantService extends MedusaProductVariantService {
       await Promise.all(imagesUpdates);
     });
 
-    // super.delete(variantIds_);
+    return super.delete(variantIds_);
   }
 }
 
