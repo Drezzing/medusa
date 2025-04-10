@@ -1,3 +1,5 @@
+// @ts-check
+
 const fs = require("fs");
 const path = require("path");
 const stream = require("stream");
@@ -12,7 +14,6 @@ const {
 const { Upload } = require("@aws-sdk/lib-storage");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { AbstractFileService } = require("@medusajs/medusa");
-const { DeleteFileType } = require("@medusajs/types")
 
 /**
  * @typedef {Object} R2StorageServiceOptions
@@ -108,7 +109,9 @@ class R2StorageService extends AbstractFileService {
     const parsedFilename = path.parse(fileData.originalname);
     const timestamp = Date.now();
     const fileKey = `${parsedFilename.name}-${timestamp}${parsedFilename.ext}`;
-    const encodedFileKey = `${encodeURIComponent(parsedFilename.name)}-${timestamp}${parsedFilename.ext}`;
+    const encodedFileKey = `${encodeURIComponent(
+      parsedFilename.name
+    )}-${timestamp}${parsedFilename.ext}`;
 
     const params = {
       Bucket: this.bucket,
@@ -130,33 +133,17 @@ class R2StorageService extends AbstractFileService {
     }
   }
 
-  /**
-   * Uploads a file with public access.
-   *
-   * @param {Express.Multer.File} fileData - The file data.
-   * @returns {Promise<{ key: string, url: string }>} The result object with the file key and URL.
-   */
+  /** @type {AbstractFileService["upload"]} */
   async upload(fileData) {
-    return this.uploadFile(fileData);
+    return this.uploadFile(fileData, false);
   }
 
-  /**
-   * Uploads a file with protected access.
-   *
-   * @param {Express.Multer.File} fileData - The file data.
-   * @returns {Promise<{ key: string, url: string }>} The result object with the file key and URL.
-   */
+  /** @type {AbstractFileService["uploadProtected"]} */
   async uploadProtected(fileData) {
     return this.uploadFile(fileData, true);
   }
 
-  /**
-   * Deletes a file from the R2 storage.
-   *
-   * @param {DeleteFileType} fileData - Object containing the fileKey property.
-   * @returns {Promise<void>}
-   * @throws {Error} If file deletion fails.
-   */
+  /** @type {AbstractFileService["delete"]} */
   async delete(fileData) {
     const client = this.storageClient();
     const params = { Bucket: this.bucket, Key: fileData.fileKey };
@@ -169,13 +156,7 @@ class R2StorageService extends AbstractFileService {
     }
   }
 
-  /**
-   * Retrieves a download stream for a given file.
-   *
-   * @param {Express.Multer.File} fileData - Object containing the fileKey property.
-   * @returns {Promise<NodeJS.ReadableStream>} The file's readable stream.
-   * @throws {Error} If getting the download stream fails.
-   */
+  /** @type {AbstractFileService["getDownloadStream"]} */
   async getDownloadStream(fileData) {
     const client = this.storageClient();
     const params = { Bucket: this.bucket, Key: fileData.fileKey };
@@ -192,13 +173,7 @@ class R2StorageService extends AbstractFileService {
     }
   }
 
-  /**
-   * Retrieves a presigned download URL for a given file.
-   *
-   * @param {Express.Multer.File} fileData - Object containing the fileKey property.
-   * @returns {Promise<string>} A presigned URL string.
-   * @throws {Error} If generating the presigned URL fails.
-   */
+  /** @type {AbstractFileService["getPresignedDownloadUrl"]} */
   async getPresignedDownloadUrl(fileData) {
     const client = this.storageClient();
     const params = {
@@ -216,12 +191,7 @@ class R2StorageService extends AbstractFileService {
     }
   }
 
-  /**
-   * Returns a descriptor for an upload stream.
-   *
-   * @param {import("@medusajs/types").UploadStreamDescriptorType} fileData - Object containing file upload details.
-   * @returns {Promise<{ fileKey: string, writeStream: stream.PassThrough, promise: Promise<void>, url: string }>}
-   */
+  /** @type {AbstractFileService["getUploadStreamDescriptor"]} */
   async getUploadStreamDescriptor(fileData) {
     const client = this.storageClient();
     const pass = new stream.PassThrough();
