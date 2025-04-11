@@ -1,10 +1,12 @@
-import js from "@eslint/js";
-import ts from "typescript-eslint";
-import prettier from "eslint-config-prettier";
-import globals from "globals";
+/* eslint-disable @typescript-eslint/no-require-imports */
+
+const js = require("@eslint/js");
+const ts = require("typescript-eslint");
+const prettier = require("eslint-config-prettier");
+const globals = require("globals");
 
 /** @type {import('eslint').Linter.Config[]} */
-export default [
+module.exports = [
     js.configs.recommended,
     ...ts.configs.recommended,
     prettier,
@@ -17,6 +19,6 @@ export default [
         },
     },
     {
-        ignores: ["data/", ".cache/", "dist/"],
+        ignores: ["data/", ".cache/", "dist/", "build/"],
     },
 ];
