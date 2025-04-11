@@ -7,9 +7,9 @@ Medusa supports adding custom API Routes using a file based approach. This means
 import type { MedusaRequest, MedusaResponse } from "@medusajs/medusa";
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
-  res.json({
-    message: "Hello world!",
-  });
+    res.json({
+        message: "Hello world!",
+    });
 }
 ```
 
@@ -31,15 +31,15 @@ You can define a handler for each of these methods by exporting a function with 
 import type { MedusaRequest, MedusaResponse } from "@medusajs/medusa";
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
-  // Handle GET requests
+    // Handle GET requests
 }
 
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
-  // Handle POST requests
+    // Handle POST requests
 }
 
 export async function PUT(req: MedusaRequest, res: MedusaResponse) {
-  // Handle PUT requests
+    // Handle PUT requests
 }
 ```
 
@@ -48,22 +48,18 @@ export async function PUT(req: MedusaRequest, res: MedusaResponse) {
 You can define parameters in the path of your route by using wrapping the parameter name in square brackets. For example, if you want to define a route that takes a `productId` parameter, you can do so by creating a file called `/api/products/[productId]/route.ts`:
 
 ```ts
-import type {
-  MedusaRequest,
-  MedusaResponse,
-  ProductService,
-} from "@medusajs/medusa";
+import type { MedusaRequest, MedusaResponse, ProductService } from "@medusajs/medusa";
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
-  const { productId } = req.params;
+    const { productId } = req.params;
 
-  const productService: ProductService = req.scope.resolve("productService");
+    const productService: ProductService = req.scope.resolve("productService");
 
-  const product = await productService.retrieve(productId);
+    const product = await productService.retrieve(productId);
 
-  res.json({
-    product,
-  });
+    res.json({
+        product,
+    });
 }
 ```
 
@@ -74,20 +70,16 @@ If you want to define a route that takes multiple parameters, you can do so by a
 A global container is available on `req.scope` to allow you to use any of the registered services from the core, installed plugins or your local project:
 
 ```ts
-import type {
-  MedusaRequest,
-  MedusaResponse,
-  ProductService,
-} from "@medusajs/medusa";
+import type { MedusaRequest, MedusaResponse, ProductService } from "@medusajs/medusa";
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
-  const productService: ProductService = req.scope.resolve("productService");
+    const productService: ProductService = req.scope.resolve("productService");
 
-  const products = await productService.list();
+    const products = await productService.list();
 
-  res.json({
-    products,
-  });
+    res.json({
+        products,
+    });
 }
 ```
 
@@ -96,29 +88,20 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
 You can apply middleware to your routes by creating a file called `/api/middlewares.ts`. This file should export a configuration object with what middleware you want to apply to which routes. For example, if you want to apply a custom middleware function to the `/store/custom` route, you can do so by adding the following to your `/api/middlewares.ts` file:
 
 ```ts
-import type {
-  MiddlewaresConfig,
-  MedusaRequest,
-  MedusaResponse,
-  MedusaNextFunction,
-} from "@medusajs/medusa";
+import type { MiddlewaresConfig, MedusaRequest, MedusaResponse, MedusaNextFunction } from "@medusajs/medusa";
 
-async function logger(
-  req: MedusaRequest,
-  res: MedusaResponse,
-  next: MedusaNextFunction
-) {
-  console.log("Request received");
-  next();
+async function logger(req: MedusaRequest, res: MedusaResponse, next: MedusaNextFunction) {
+    console.log("Request received");
+    next();
 }
 
 export const config: MiddlewaresConfig = {
-  routes: [
-    {
-      matcher: "/store/custom",
-      middlewares: [logger],
-    },
-  ],
+    routes: [
+        {
+            matcher: "/store/custom",
+            middlewares: [logger],
+        },
+    ],
 };
 ```
 
@@ -128,13 +111,13 @@ You might only want to apply middleware to certain HTTP methods. You can do so b
 
 ```ts
 export const config: MiddlewaresConfig = {
-  routes: [
-    {
-      matcher: "/store/custom",
-      method: "GET",
-      middlewares: [logger],
-    },
-  ],
+    routes: [
+        {
+            matcher: "/store/custom",
+            method: "GET",
+            middlewares: [logger],
+        },
+    ],
 };
 ```
 
@@ -154,13 +137,13 @@ If you want to use a different parser for a specific route, such as `urlencoded`
 import { urlencoded } from "express";
 
 export const config: MiddlewaresConfig = {
-  routes: [
-    {
-      method: "POST",
-      matcher: "/store/custom",
-      middlewares: [urlencoded()],
-    },
-  ],
+    routes: [
+        {
+            method: "POST",
+            matcher: "/store/custom",
+            middlewares: [urlencoded()],
+        },
+    ],
 };
 ```
 
