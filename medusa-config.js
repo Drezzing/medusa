@@ -1,5 +1,5 @@
-const dotenv = require("dotenv");
-const fs = require("fs");
+import { config } from "dotenv";
+import { readFileSync } from "fs";
 
 let ENV_FILE_NAME = "";
 switch (process.env.NODE_ENV) {
@@ -18,13 +18,13 @@ switch (process.env.NODE_ENV) {
         break;
 }
 
-dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
+config({ path: process.cwd() + "/" + ENV_FILE_NAME });
 for (const [key, value] of Object.entries(process.env)) {
     if (key.endsWith("_FILE")) {
         try {
-            process.env[key.slice(0, -5)] = fs.readFileSync(value, "utf8");
+            process.env[key.slice(0, -5)] = readFileSync(value, "utf8");
             delete process.env[key];
-        } catch (e) {
+        } catch {
             throw new Error(`Could not read file ${value} for env variable ${key}`);
         }
     }
@@ -123,7 +123,7 @@ const projectConfig = {
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
-module.exports = {
+export default {
     projectConfig,
     plugins,
     modules,

@@ -31,15 +31,19 @@ const Item: React.FC<AccordionItemProps> = ({
     title,
     subtitle,
     description,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     required,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     tooltip,
     children,
     className,
     complete,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     headingSize = "large",
     customTrigger = undefined,
     forceMountContent = undefined,
     active,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     triggerable,
     ...props
 }) => {

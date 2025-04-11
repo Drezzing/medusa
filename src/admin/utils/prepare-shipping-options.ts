@@ -15,7 +15,7 @@ export default async function prepareShippingOptions(client: Medusa, region: Reg
                     data: {
                         id: "manual-fulfillment",
                     },
-                    // @ts-ignore
+                    // @ts-expect-error idk why but there should be an error
                     price_type: "flat_rate",
                     amount: 1000,
                 })

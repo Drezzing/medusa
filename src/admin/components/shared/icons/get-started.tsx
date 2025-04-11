@@ -1,6 +1,7 @@
 import React from "react";
 import IconProps from "../../../types/icon-type";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GetStarted: React.FC<IconProps> = ({ size = "40", color = "currentColor", ...attributes }) => {
     return (
         <svg

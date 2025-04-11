@@ -1,19 +1,13 @@
 // @ts-check
 
-const fs = require("fs");
-const path = require("path");
-const stream = require("stream");
+import { createReadStream } from "fs";
+import { parse } from "path";
+import { Readable, PassThrough } from "stream";
 
-const {
-    DeleteObjectCommand,
-    GetObjectCommand,
-    ObjectCannedACL,
-    PutObjectCommand,
-    S3Client,
-} = require("@aws-sdk/client-s3");
-const { Upload } = require("@aws-sdk/lib-storage");
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const { AbstractFileService } = require("@medusajs/medusa");
+import { DeleteObjectCommand, GetObjectCommand, ObjectCannedACL, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { AbstractFileService } from "@medusajs/medusa";
 
 /**
  * @typedef {Object} R2StorageServiceOptions
@@ -101,7 +95,7 @@ class R2StorageService extends AbstractFileService {
     async uploadFile(fileData, isPrivate) {
         const client = this.storageClient();
 
-        const parsedFilename = path.parse(fileData.originalname);
+        const parsedFilename = parse(fileData.originalname);
         const timestamp = Date.now();
         const fileKey = `${parsedFilename.name}-${timestamp}${parsedFilename.ext}`;
         const encodedFileKey = `${encodeURIComponent(parsedFilename.name)}-${timestamp}${parsedFilename.ext}`;
@@ -109,7 +103,7 @@ class R2StorageService extends AbstractFileService {
         const params = {
             Bucket: this.bucket,
             Key: fileKey,
-            Body: fs.createReadStream(fileData.path),
+            Body: createReadStream(fileData.path),
             ContentType: fileData.mimetype,
             ACL: isPrivate ? ObjectCannedACL.private : ObjectCannedACL.public_read,
         };
@@ -156,7 +150,7 @@ class R2StorageService extends AbstractFileService {
 
         try {
             const { Body } = await client.send(new GetObjectCommand(params));
-            if (!(Body instanceof stream.Readable)) {
+            if (!(Body instanceof Readable)) {
                 throw new Error("Invalid stream returned from S3");
             }
             return Body;
@@ -187,7 +181,7 @@ class R2StorageService extends AbstractFileService {
     /** @type {AbstractFileService["getUploadStreamDescriptor"]} */
     async getUploadStreamDescriptor(fileData) {
         const client = this.storageClient();
-        const pass = new stream.PassThrough();
+        const pass = new PassThrough();
         const fileKey = `${fileData.name}.${fileData.ext}`;
         const isPrivate = fileData.isPrivate ?? true;
 
@@ -212,4 +206,4 @@ class R2StorageService extends AbstractFileService {
     }
 }
 
-module.exports = R2StorageService;
+export default R2StorageService;
