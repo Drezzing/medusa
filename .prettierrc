@@ -1,0 +1,16 @@
+{
+    "useTabs": false,
+    "tabWidth": 4,
+    "singleQuote": false,
+    "trailingComma": "all",
+    "printWidth": 120,
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "overrides": [
+        {
+            "files": ".github/workflows/*.yml",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}
