@@ -1,0 +1,188 @@
+diff --git a/node_modules/@medusajs/admin-ui/dist/index.d.ts b/node_modules/@medusajs/admin-ui/dist/index.d.ts
+index 49117a4..6e0c254 100644
+--- a/node_modules/@medusajs/admin-ui/dist/index.d.ts
++++ b/node_modules/@medusajs/admin-ui/dist/index.d.ts
+@@ -3,7 +3,7 @@ import webpack, { Configuration } from 'webpack';
+ 
+ declare const forbiddenRoutes: readonly ["/products", "/products/:id", "/product-categories", "/product-categories", "/orders", "/orders/:id", "/customers", "/customers/:id", "/customers/groups", "/customers/groups/:id", "/discounts", "/discounts/new", "/discounts/:id", "/gift-cards", "/gift-cards/:id", "/gift-cards/manage", "/pricing", "/pricing/new", "/pricing/:id", "/inventory", "/collections", "/collections/:id", "/draft-orders", "/draft-orders/:id", "/login", "/sales-channels", "/publishable-api-keys", "/oauth", "/oauth/:app_name"];
+ 
+-declare const injectionZones: readonly ["order.details.before", "order.details.after", "order.list.before", "order.list.after", "draft_order.list.before", "draft_order.list.after", "draft_order.details.before", "draft_order.details.after", "customer.details.before", "customer.details.after", "customer.list.before", "customer.list.after", "customer_group.details.before", "customer_group.details.after", "customer_group.list.before", "customer_group.list.after", "product.details.before", "product.details.after", "product.list.before", "product.list.after", "product_collection.details.before", "product_collection.details.after", "product_collection.list.before", "product_collection.list.after", "price_list.details.before", "price_list.details.after", "price_list.list.before", "price_list.list.after", "discount.details.before", "discount.details.after", "discount.list.before", "discount.list.after", "gift_card.details.before", "gift_card.details.after", "gift_card.list.before", "gift_card.list.after", "custom_gift_card.before", "custom_gift_card.after", "login.before", "login.after"];
++declare const injectionZones: readonly ["order.details.before", "order.details.after", "order.list.before", "order.list.after", "draft_order.list.before", "draft_order.list.after", "draft_order.details.before", "draft_order.details.after", "customer.details.before", "customer.details.after", "customer.list.before", "customer.list.after", "customer_group.details.before", "customer_group.details.after", "customer_group.list.before", "customer_group.list.after", "product.details.before", "product.details.after", "product.list.before", "product.list.after", "product_collection.details.before", "product_collection.details.after", "product_collection.list.before", "product_collection.list.after", "product_category.details.before", "product_category.details.after", "product_category.list.before", "product_category.list.after",  "price_list.details.before", "price_list.details.after", "price_list.list.before", "price_list.list.after", "discount.details.before", "discount.details.after", "discount.list.before", "discount.list.after", "gift_card.details.before", "gift_card.details.after", "gift_card.list.before", "gift_card.list.after", "custom_gift_card.before", "custom_gift_card.after", "login.before", "login.after"];
+ 
+ type InjectionZone = (typeof injectionZones)[number];
+ type ForbiddenRoute = (typeof forbiddenRoutes)[number];
+diff --git a/node_modules/@medusajs/admin-ui/dist/index.js b/node_modules/@medusajs/admin-ui/dist/index.js
+index 84a37bd..a7bb6dc 100644
+--- a/node_modules/@medusajs/admin-ui/dist/index.js
++++ b/node_modules/@medusajs/admin-ui/dist/index.js
+@@ -1,4 +1,4 @@
+-var Le=Object.create;var C=Object.defineProperty;var Ne=Object.getOwnPropertyDescriptor;var Ve=Object.getOwnPropertyNames;var Ue=Object.getPrototypeOf,Oe=Object.prototype.hasOwnProperty;var s=(e,t)=>C(e,"name",{value:t,configurable:!0});var Me=(e,t)=>{for(var o in t)C(e,o,{get:t[o],enumerable:!0})},ce=(e,t,o,r)=>{if(t&&typeof t=="object"||typeof t=="function")for(let n of Ve(t))!Oe.call(e,n)&&n!==o&&C(e,n,{get:()=>t[n],enumerable:!(r=Ne(t,n))||r.enumerable});return e};var d=(e,t,o)=>(o=e!=null?Le(Ue(e)):{},ce(t||!e||!e.__esModule?C(o,"default",{value:e,enumerable:!0}):o,e)),ze=e=>ce(C({},"__esModule",{value:!0}),e);var st={};Me(st,{ALIASED_PACKAGES:()=>z,build:()=>oe,clean:()=>ae,develop:()=>le,findAllValidRoutes:()=>D,findAllValidSettings:()=>j,findAllValidWidgets:()=>P,forbiddenRoutes:()=>R,injectionZones:()=>L,logger:()=>l,normalizePath:()=>w,withCustomWebpackConfig:()=>re});module.exports=ze(st);var R=["/products","/products/:id","/product-categories","/product-categories","/orders","/orders/:id","/customers","/customers/:id","/customers/groups","/customers/groups/:id","/discounts","/discounts/new","/discounts/:id","/gift-cards","/gift-cards/:id","/gift-cards/manage","/pricing","/pricing/new","/pricing/:id","/inventory","/collections","/collections/:id","/draft-orders","/draft-orders/:id","/login","/sales-channels","/publishable-api-keys","/oauth","/oauth/:app_name"];var L=["order.details.before","order.details.after","order.list.before","order.list.after","draft_order.list.before","draft_order.list.after","draft_order.details.before","draft_order.details.after","customer.details.before","customer.details.after","customer.list.before","customer.list.after","customer_group.details.before","customer_group.details.after","customer_group.list.before","customer_group.list.after","product.details.before","product.details.after","product.list.before","product.list.after","product_collection.details.before","product_collection.details.after","product_collection.list.before","product_collection.list.after","price_list.details.before","price_list.details.after","price_list.list.before","price_list.list.after","discount.details.before","discount.details.after","discount.list.before","discount.list.after","gift_card.details.before","gift_card.details.after","gift_card.list.before","gift_card.list.after","custom_gift_card.before","custom_gift_card.after","login.before","login.after"];var H=d(require("path")),De=d(require("webpack"));var ge=d(require("fs-extra")),M=d(require("path"));var K=d(require("fs-extra"));function N(e){return!(K.default.lstatSync(e).isDirectory()&&e.includes("__test__")||K.default.lstatSync(e).isFile()&&(e.includes(".test")||e.includes(".spec")||e.includes("webpack.config")))}s(N,"copyFilter");var E=d(require("fs-extra")),m=d(require("path")),I=d(require("ts-dedent"));var b=d(require("picocolors")),B=d(require("readline"));var q="[@medusajs/admin]";function Ge(){let e=process.stdout.rows-2,t=e>0?`
++var Le=Object.create;var C=Object.defineProperty;var Ne=Object.getOwnPropertyDescriptor;var Ve=Object.getOwnPropertyNames;var Ue=Object.getPrototypeOf,Oe=Object.prototype.hasOwnProperty;var s=(e,t)=>C(e,"name",{value:t,configurable:!0});var Me=(e,t)=>{for(var o in t)C(e,o,{get:t[o],enumerable:!0})},ce=(e,t,o,r)=>{if(t&&typeof t=="object"||typeof t=="function")for(let n of Ve(t))!Oe.call(e,n)&&n!==o&&C(e,n,{get:()=>t[n],enumerable:!(r=Ne(t,n))||r.enumerable});return e};var d=(e,t,o)=>(o=e!=null?Le(Ue(e)):{},ce(t||!e||!e.__esModule?C(o,"default",{value:e,enumerable:!0}):o,e)),ze=e=>ce(C({},"__esModule",{value:!0}),e);var st={};Me(st,{ALIASED_PACKAGES:()=>z,build:()=>oe,clean:()=>ae,develop:()=>le,findAllValidRoutes:()=>D,findAllValidSettings:()=>j,findAllValidWidgets:()=>P,forbiddenRoutes:()=>R,injectionZones:()=>L,logger:()=>l,normalizePath:()=>w,withCustomWebpackConfig:()=>re});module.exports=ze(st);var R=["/products","/products/:id","/product-categories","/product-categories","/orders","/orders/:id","/customers","/customers/:id","/customers/groups","/customers/groups/:id","/discounts","/discounts/new","/discounts/:id","/gift-cards","/gift-cards/:id","/gift-cards/manage","/pricing","/pricing/new","/pricing/:id","/inventory","/collections","/collections/:id","/draft-orders","/draft-orders/:id","/login","/sales-channels","/publishable-api-keys","/oauth","/oauth/:app_name"];var L=["order.details.before","order.details.after","order.list.before","order.list.after","draft_order.list.before","draft_order.list.after","draft_order.details.before","draft_order.details.after","customer.details.before","customer.details.after","customer.list.before","customer.list.after","customer_group.details.before","customer_group.details.after","customer_group.list.before","customer_group.list.after","product.details.before","product.details.after","product.list.before","product.list.after","product_category.details.before","product_category.details.after","product_category.list.before","product_category.list.after","product_collection.details.after","product_collection.list.before","product_collection.list.after","product_category.details.before","price_list.details.before","price_list.details.after","price_list.list.before","price_list.list.after","discount.details.before","discount.details.after","discount.list.before","discount.list.after","gift_card.details.before","gift_card.details.after","gift_card.list.before","gift_card.list.after","custom_gift_card.before","custom_gift_card.after","login.before","login.after"];var H=d(require("path")),De=d(require("webpack"));var ge=d(require("fs-extra")),M=d(require("path"));var K=d(require("fs-extra"));function N(e){return!(K.default.lstatSync(e).isDirectory()&&e.includes("__test__")||K.default.lstatSync(e).isFile()&&(e.includes(".test")||e.includes(".spec")||e.includes("webpack.config")))}s(N,"copyFilter");var E=d(require("fs-extra")),m=d(require("path")),I=d(require("ts-dedent"));var b=d(require("picocolors")),B=d(require("readline"));var q="[@medusajs/admin]";function Ge(){let e=process.stdout.rows-2,t=e>0?`
+ `.repeat(e):"";console.log(t),B.default.cursorTo(process.stdout,0,0),B.default.clearScreenDown(process.stdout)}s(Ge,"clearScreen");var He=process.stdout.isTTY&&!process.env.CI,Ke=He?Ge:()=>{};function qe(){let e=s((t,o,r)=>{let n=t==="info"?"log":t,a=s(()=>{let i=t==="info"?b.default.cyan(b.default.bold(q)):t==="warn"?b.default.yellow(b.default.bold(q)):b.default.red(b.default.bold(q));return`${b.default.dim(new Date().toLocaleTimeString())} ${i} ${o}`},"format");r!=null&&r.clearScreen&&Ke(),console[n](a()),r!=null&&r.error&&console.error(r.error)},"output");return{info:(t,o)=>e("info",t,o),warn:(t,o)=>e("warn",t,o),error:(t,o)=>e("error",t,o),panic:(t,o)=>{e("error",t,o),e("error","Exiting process",{}),process.exit(1)}}}s(qe,"createLogger");var l=qe();function w(e){let o=process.platform==="win32"?"\\":"/",r=new RegExp(`\\${o}`,"g");return e.replace(r,"/")}s(w,"normalizePath");var V=require("@babel/parser"),_=d(require("@babel/traverse")),v=d(require("fs-extra")),A=d(require("path"));function de(e){return L.includes(e)}s(de,"isValidInjectionZone");function Be(e){let t=e.find(r=>r.type==="ObjectProperty"&&r.key.type==="Identifier"&&r.key.name==="zone");if(!t)return!1;let o=!1;return t.value.type==="StringLiteral"?o=de(t.value.value):t.value.type==="ArrayExpression"&&(o=t.value.elements.every(r=>r.type==="StringLiteral"&&de(r.value))),o}s(Be,"validateWidgetConfigExport");function Je(e){let t=e.find(n=>n.type==="ObjectProperty"&&n.key.type==="Identifier"&&n.key.name==="link");if(!t)return!0;let o=t.value,r=!1;return o.properties.some(n=>n.type==="ObjectProperty"&&n.key.type==="Identifier"&&n.key.name==="label"&&n.value.type==="StringLiteral")&&(r=!0),r}s(Je,"validateRouteConfigExport");function Xe(e){let t=e.find(a=>a.type==="ObjectProperty"&&a.key.type==="Identifier"&&a.key.name==="card");if(!t)return!1;let o=t.value,r=!1,n=!1;return o.properties.some(a=>a.type==="ObjectProperty"&&a.key.type==="Identifier"&&a.key.name==="label"&&a.value.type==="StringLiteral")&&(r=!0),o.properties.some(a=>a.type==="ObjectProperty"&&a.key.type==="Identifier"&&a.key.name==="description"&&a.value.type==="StringLiteral")&&(n=!0),r&&n}s(Xe,"validateSettingConfigExport");function J(e,t){let o=!1,r=e.node.declaration;if(r&&r.type==="VariableDeclaration"){let n=r.declarations.find(a=>a.type==="VariableDeclarator"&&a.id.type==="Identifier"&&a.id.name==="config");if(n&&n.init.type==="ObjectExpression"){let a=n.init.properties;t==="widget"&&(o=Be(a)),t==="route"&&(o=Je(a)),t==="setting"&&(o=Xe(a))}else o=!1}return o}s(J,"validateConfigExport");function X(e,t){let o=!1,r=e.node.declaration;if(r&&(r.type==="Identifier"||r.type==="FunctionDeclaration")){let n=r.type==="Identifier"?r.name:r.id&&r.id.name;if(n)try{(0,_.default)(t,{VariableDeclarator({node:a,scope:i}){let f=!1;a.id.type==="Identifier"&&a.id.name===n&&(f=!0),f&&(0,_.default)(a,{ReturnStatement(u){var p,c;(((p=u.node.argument)==null?void 0:p.type)==="JSXElement"||((c=u.node.argument)==null?void 0:c.type)==="JSXFragment")&&(o=!0)}},i)}})}catch(a){return l.error(`There was an error while validating the default export of ${e}. The following error must be resolved before continuing:`,{error:a}),!1}}return o}s(X,"validateDefaultExport");async function fe(e){let t=await v.default.readFile(e,"utf-8"),o={sourceType:"module",plugins:["jsx"]};(e.endsWith(".ts")||e.endsWith(".tsx"))&&o.plugins.push("typescript");let r;try{r=(0,V.parse)(t,o)}catch(i){return l.error(`An error occurred while parsing the Widget "${e}", and the Widget cannot be injected. The following error must be resolved before continuing:`,{error:i}),!1}let n=!1,a=!1;try{(0,_.default)(r,{ExportDefaultDeclaration:i=>{a=X(i,r)},ExportNamedDeclaration:i=>{n=J(i,"widget")}})}catch(i){return l.error(`An error occurred while validating the Widget "${e}". The following error must be resolved before continuing:`,{error:i}),!1}return n&&!a&&(a||l.error(`The default export in the Widget "${e}" is invalid and the widget will not be injected. Please make sure that the default export is a valid React component.`)),!n&&a&&l.error(`The Widget config export in "${e}" is invalid and the Widget cannot be injected. Please ensure that the config is valid.`),n&&a}s(fe,"validateWidget");function ue(e){let t=w(e),o=/\[(.*?)\]/g;return t.replace(o,":$1").replace(/\/page\.[jt]sx?$/i,"")}s(ue,"createPath");function Ze(e){return R.includes(e)}s(Ze,"isForbiddenRoute");function pe(e,t){if(Ze(e))return{error:`A route from ${t} is using a forbidden path: ${e}.`,valid:!1};let o=["/",":","-"];for(let r=0;r<e.length;r++){let n=e[r];if(!o.includes(n)&&!/^[a-z0-9]$/i.test(n))return{error:`A route from ${t} is using an invalid path: ${e}. Only alphanumeric characters, "/", ":", and "-" are allowed.`,valid:!1};if(n===":"&&(r===0||e[r-1]!=="/"))return{error:`A route from ${t} is using an invalid path: ${e}. All dynamic segments must be preceded by a "/".`,valid:!1}}return{valid:!0,error:""}}s(pe,"validatePath");async function me(e,t){let o=ue(e.replace(t,"")),{valid:r,error:n}=pe(o,e);if(!r)return l.error(`The path ${o} for the UI Route "${e}" is invalid and the route cannot be injected. The following error must be fixed before the route can be injected: ${n}`),null;let a=await v.default.readFile(e,"utf-8"),i=!1,f=!1,u={sourceType:"module",plugins:["jsx"]};(e.endsWith(".ts")||e.endsWith(".tsx"))&&u.plugins.push("typescript");let p;try{p=(0,V.parse)(a,u)}catch(c){return l.error(`An error occurred while parsing the UI Route "${e}", and the UI Route cannot be injected. The following error must be resolved before continuing:`,{error:c}),null}try{(0,_.default)(p,{ExportDefaultDeclaration:c=>{i=X(c,p)},ExportNamedDeclaration:c=>{f=J(c,"route")}})}catch(c){return l.error(`An error occurred while validating the UI Route "${e}", and the UI Route cannot be injected. The following error must be resolved before continuing:`,{error:c}),null}return i?{path:o,hasConfig:f,file:e}:(l.error(`The default export in the UI Route "${e}" is invalid and the route cannot be injected. Please make sure that the default export is a valid React component.`),null)}s(me,"validateRoute");async function he(e,t){let o=ue(e.replace(t,"")),{valid:r,error:n}=pe(o,e);if(!r)return l.error(`The path ${o} for the Setting "${e}" is invalid and the setting cannot be injected. The following error must be fixed before the Setting can be injected: ${n}`),null;let a=await v.default.readFile(e,"utf-8"),i=!1,f=!1,u={sourceType:"module",plugins:["jsx"]};(e.endsWith(".ts")||e.endsWith(".tsx"))&&u.plugins.push("typescript");let p;try{p=(0,V.parse)(a,u)}catch(c){return l.error(`
+       An error occured while parsing the Setting "${e}". The following error must be resolved before continuing:
+       `,{error:c}),null}try{(0,_.default)(p,{ExportDefaultDeclaration:c=>{i=X(c,p)},ExportNamedDeclaration:c=>{f=J(c,"setting")}})}catch(c){return l.error(`
+diff --git a/node_modules/@medusajs/admin-ui/ui/src/components/extensions/widget-container/types.ts b/node_modules/@medusajs/admin-ui/ui/src/components/extensions/widget-container/types.ts
+index 344595b..29cc11a 100644
+--- a/node_modules/@medusajs/admin-ui/ui/src/components/extensions/widget-container/types.ts
++++ b/node_modules/@medusajs/admin-ui/ui/src/components/extensions/widget-container/types.ts
+@@ -7,6 +7,7 @@ import {
+   Order,
+   PriceList,
+   Product,
++  ProductCategory,
+   ProductCollection,
+ } from "@medusajs/medusa"
+ 
+@@ -16,6 +17,8 @@ export type EntityMap = {
+   "product.details.before": Product
+   "product_collection.details.after": ProductCollection
+   "product_collection.details.before": ProductCollection
++  "product_category.details.before": ProductCategory
++  "product_category.details.after": ProductCategory
+   "order.details.after": Order
+   "order.details.before": Order
+   "draft_order.details.after": DraftOrder
+@@ -37,6 +40,8 @@ export type EntityMap = {
+   "product.list.before"?: never | null | undefined
+   "product_collection.list.after"?: never | null | undefined
+   "product_collection.list.before"?: never | null | undefined
++  "product_category.list.after"?: never | null | undefined
++  "product_category.list.before"?: never | null | undefined
+   "order.list.after"?: never | null | undefined
+   "order.list.before"?: never | null | undefined
+   "draft_order.list.after"?: never | null | undefined
+@@ -61,6 +66,8 @@ export const PropKeyMap = {
+   "product.details.before": "product",
+   "product_collection.details.after": "productCollection",
+   "product_collection.details.before": "productCollection",
++  "product_category.details.before": "productCategory",
++  "product_category.details.after": "productCategory",
+   "order.details.after": "order",
+   "order.details.before": "order",
+   "draft_order.details.after": "draftOrder",
+diff --git a/node_modules/@medusajs/admin-ui/ui/src/constants/injection-zones.ts b/node_modules/@medusajs/admin-ui/ui/src/constants/injection-zones.ts
+index 7bedcfc..efde8c7 100644
+--- a/node_modules/@medusajs/admin-ui/ui/src/constants/injection-zones.ts
++++ b/node_modules/@medusajs/admin-ui/ui/src/constants/injection-zones.ts
+@@ -29,6 +29,11 @@ export const injectionZones = [
+   "product_collection.details.after",
+   "product_collection.list.before",
+   "product_collection.list.after",
++  // Product category injection zones
++  "product_category.details.before",
++  "product_category.details.after",
++  "product_category.list.before",
++  "product_category.list.after",
+   // Price list injection zones
+   "price_list.details.before",
+   "price_list.details.after",
+diff --git a/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/components/product-categories-list.tsx b/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/components/product-categories-list.tsx
+index 3116881..69e3340 100644
+--- a/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/components/product-categories-list.tsx
++++ b/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/components/product-categories-list.tsx
+@@ -16,6 +16,9 @@ import useNotification from "../../../hooks/use-notification"
+ import useToggleState from "../../../hooks/use-toggle-state"
+ import ProductCategoryListItemDetails from "./product-category-list-item-details"
+ 
++import WidgetContainer from "../../../components/extensions/widget-container"
++import { useWidgets } from "../../../providers/widget-provider"
++
+ type ProductCategoriesListProps = {
+   categories: ProductCategory[]
+ }
+@@ -125,6 +128,8 @@ function ProductCategoriesList(props: ProductCategoriesListProps) {
+     [categories, isError]
+   )
+ 
++  const { getWidgets } = useWidgets()
++
+   return (
+     <div
+       style={{
+@@ -132,7 +137,27 @@ function ProductCategoriesList(props: ProductCategoriesListProps) {
+         position: "relative",
+       }}
+     >
++      {getWidgets("product_category.list.before").map((w, i) => {
++        return (
++          <WidgetContainer
++            key={i}
++            entity={undefined}
++            injectionZone="product_category.list.before"
++            widget={w}
++          />
++        )
++      })}
+       {NestableList}
++      {getWidgets("product_category.list.after").map((w, i) => {
++        return (
++          <WidgetContainer
++            key={i}
++            entity={undefined}
++            injectionZone="product_category.list.after"
++            widget={w}
++          />
++        )
++      })}
+       {isUpdating && (
+         <div
+           style={{
+diff --git a/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/modals/edit-product-category.tsx b/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/modals/edit-product-category.tsx
+index 4a9d82c..e9e0cfa 100644
+--- a/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/modals/edit-product-category.tsx
++++ b/node_modules/@medusajs/admin-ui/ui/src/domain/product-categories/modals/edit-product-category.tsx
+@@ -5,6 +5,9 @@ import { useAdminUpdateProductCategory } from "medusa-react"
+ import { TFunction } from "i18next"
+ import { useTranslation } from "react-i18next"
+ 
++import WidgetContainer from "../../../components/extensions/widget-container"
++import { useWidgets } from "../../../providers/widget-provider"
++
+ import Button from "../../../components/fundamentals/button"
+ import CrossIcon from "../../../components/fundamentals/icons/cross-icon"
+ import InputField from "../../../components/molecules/input"
+@@ -114,6 +117,8 @@ function EditProductCategoriesSideModal(
+     close()
+   }
+ 
++  const { getWidgets } = useWidgets()
++
+   return (
+     <SideModal close={onClose} isVisible={!!isVisible}>
+       <div className="flex h-full flex-col justify-between overflow-auto">
+@@ -150,8 +155,17 @@ function EditProductCategoriesSideModal(
+             <TreeCrumbs nodes={categories} currentNode={activeCategory} />
+           </div>
+         )}
+-
+         <div className="flex-grow px-6">
++          {getWidgets("product_category.details.before").map((w, i) => {
++            return (
++              <WidgetContainer
++                key={i}
++                entity={activeCategory}
++                injectionZone="product_category.details.before"
++                widget={w}
++              />
++            )
++          })}
+           <InputField
+             required
+             label={t("modals-name", "Name") as string}
+@@ -232,6 +246,16 @@ function EditProductCategoriesSideModal(
+             </h2>
+             <MetadataForm form={nestedForm(form, "metadata")} />
+           </div>
++          {getWidgets("product_category.details.after").map((w, i) => {
++            return (
++              <WidgetContainer
++                key={i}
++                entity={activeCategory}
++                injectionZone="product_category.details.after"
++                widget={w}
++              />
++            )
++          })}
+         </div>
+       </div>
+     </SideModal>

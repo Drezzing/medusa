@@ -1,0 +1,14 @@
+diff --git a/node_modules/@medusajs/admin/types/widgets.d.ts b/node_modules/@medusajs/admin/types/widgets.d.ts
+index 0407166..3f1269b 100644
+--- a/node_modules/@medusajs/admin/types/widgets.d.ts
++++ b/node_modules/@medusajs/admin/types/widgets.d.ts
+@@ -6,6 +6,9 @@ export interface ProductDetailsWidgetProps extends WidgetProps {
+ export interface ProductCollectionDetailsWidgetProps extends WidgetProps {
+     productCollection: ProductCollection;
+ }
++export interface ProductCategoryDetailsWidgetProps extends WidgetProps {
++    productCategory: ProductCategory;
++}
+ export interface OrderDetailsWidgetProps extends WidgetProps {
+     order: Order;
+ }
