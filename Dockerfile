@@ -2,6 +2,7 @@ FROM node:20.16-alpine AS builder
 
 WORKDIR /backend
 COPY package*.json .
+COPY patches/* patches/
 RUN npm ci
 COPY . .
 
