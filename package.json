@@ -24,7 +24,8 @@
         "start:custom": "cross-env npm run build && node --preserve-symlinks --trace-warnings index.js",
         "dev": "cross-env npm run build:server && medusa develop",
         "lint": "prettier --check . && eslint .",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "postintall": "patch-package"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.772.0",
@@ -65,6 +66,7 @@
         "eslint-config-prettier": "^10.1.1",
         "globals": "^16.0.0",
         "jest": "^29.7.0",
+        "patch-package": "^8.0.0",
         "prettier": "^3.5.3",
         "prettier-plugin-tailwindcss": "^0.6.11",
         "rimraf": "^3.0.2",
