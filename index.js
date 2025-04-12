@@ -1,7 +1,8 @@
-import express from "express";
-import { GracefulShutdownServer } from "medusa-core-utils";
+/* eslint-disable @typescript-eslint/no-require-imports */
+const express = require("express");
+const { GracefulShutdownServer } = require("medusa-core-utils");
 
-import loaders from "@medusajs/medusa/dist/loaders/index";
+const loaders = require("@medusajs/medusa/dist/loaders/index").default;
 
 (async () => {
     async function start() {

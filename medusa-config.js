@@ -1,5 +1,6 @@
-import { config } from "dotenv";
-import { readFileSync } from "fs";
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { config } = require("dotenv");
+const { readFileSync } = require("fs");
 
 let ENV_FILE_NAME = "";
 switch (process.env.NODE_ENV) {
@@ -123,7 +124,7 @@ const projectConfig = {
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
-export default {
+module.exports = {
     projectConfig,
     plugins,
     modules,
