@@ -28,18 +28,32 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
         return selection;
     }, [product.images]);
 
+    const currentAltDescription = useMemo(() => {
+        const altDescription: Record<string, string> = {};
+        for (const image of product.images) {
+            if (image.metadata && image.metadata.alt_description) {
+                altDescription[image.id] = image.metadata.alt_description as string;
+            } else {
+                altDescription[image.id] = "";
+            }
+        }
+        return altDescription;
+    }, [product.images]);
+
     const [selection, setSelection] = useState<Record<string, string[]>>(currentSelection);
+    const [altDescription, setAltDescription] = useState<Record<string, string>>(currentAltDescription);
+
     const handleSave = useCallback(() => {
         updateProduct.mutate(
             {
-                metadata: { ...product.metadata, variantImages: selection },
+                metadata: { ...product.metadata, variantImages: selection, altDescription: altDescription },
             },
             {
                 onSuccess: () => notify.success("Product variant images updated successfully", ""),
                 onError: (error) => notify.error("Failed to update product variant images", error.message),
             },
         );
-    }, [updateProduct, product.metadata, selection, notify]);
+    }, [updateProduct, product.metadata, selection, altDescription, notify]);
 
     const handleSelectionChange = useCallback(
         (imageId: string, newValue: MultiValue<{ value: string; label: string }>) => {
@@ -52,6 +66,15 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
         [],
     );
 
+    const handleAltDescriptionChange = useCallback((imageId: string, newValue: string) => {
+        console.log(imageId, newValue);
+        setAltDescription((prevAltDescription) => {
+            const updatedAltDescription = { ...prevAltDescription };
+            updatedAltDescription[imageId] = newValue;
+            return updatedAltDescription;
+        });
+    }, []);
+
     const imageComponents = useMemo(
         () =>
             product.images.map((image) => {
@@ -63,9 +86,18 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
                     };
                 });
 
+                const defaultAltDescription = altDescription[image.id] || "";
+
                 return (
-                    <div key={image.url} className="flex items-center space-x-4">
-                        <img src={image.url} alt="Product Variant" className="h-16 w-16 rounded object-cover" />
+                    <div
+                        key={image.url}
+                        className="grid grid-cols-[auto_1fr] grid-rows-[auto_auto] items-center gap-x-4 gap-y-2"
+                    >
+                        <img
+                            src={image.url}
+                            alt="Product Variant"
+                            className="row-span-2 size-20 rounded object-cover"
+                        />
                         <Select
                             className="w-full"
                             isMulti
@@ -74,25 +106,25 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
                             defaultValue={defaultSelection}
                             onChange={(newValue) => handleSelectionChange(image.id, newValue)}
                             options={options}
-                            styles={{
-                                control: (provided) => ({
-                                    ...provided,
-                                    maxHeight: "56px",
-                                    overflowY: "auto",
-                                }),
-                            }}
+                        />
+                        <input
+                            // styled like react-select
+                            className="h-[36px] w-full rounded border border-[hsl(0,0%,80%)] px-3 py-2 duration-100 placeholder:text-[hsl(0,0%,50%)] hover:border-[hsl(0,0%,70%)] focus:border-[#2684FF] focus:outline-none focus:ring-1 focus:ring-[#2684FF] focus:ring-offset-0"
+                            placeholder="Alt description"
+                            defaultValue={defaultAltDescription}
+                            onChange={(e) => handleAltDescriptionChange(image.id, e.target.value)}
                         />
                     </div>
                 );
             }),
-        [product.images, selection, options, handleSelectionChange],
+        [product.images, selection, options, handleSelectionChange, altDescription, handleAltDescriptionChange],
     );
 
     return (
         <div key="product-variants-images" className="rounded-lg border border-gray-200 bg-white p-8">
             <h1 className="text-grey-90 inter-xlarge-semibold mb-base">Product Variant Images</h1>
 
-            {imageComponents}
+            <div className="space-y-4">{imageComponents}</div>
 
             <div className="mt-4 flex justify-end">
                 <Button variant="primary" onClick={handleSave}>
