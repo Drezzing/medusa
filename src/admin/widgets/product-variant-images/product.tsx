@@ -4,7 +4,10 @@ import { useAdminUpdateProduct } from "medusa-react";
 import { useCallback, useMemo, useState } from "react";
 import Select, { MultiValue } from "react-select";
 
-import { WIDGET_IMAGE_METADATA_KEYS } from "../../../services/product";
+export const WIDGET_IMAGE_METADATA_KEYS = {
+    VARIANTS: "imageMetadata-variants",
+    ALT_DESCRIPTION: "imageMetadata-altDescription",
+} as const;
 
 const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) => {
     const updateProduct = useAdminUpdateProduct(product.id);

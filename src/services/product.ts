@@ -1,10 +1,7 @@
 import { ProductService as MedusaProductService, Product } from "@medusajs/medusa";
 import { UpdateProductInput } from "@medusajs/medusa/dist/types/product";
 
-export const WIDGET_IMAGE_METADATA_KEYS = {
-    VARIANTS: "imageMetadata-variants",
-    ALT_DESCRIPTION: "imageMetadata-altDescription",
-} as const;
+import { WIDGET_IMAGE_METADATA_KEYS } from "../admin/widgets/product-variant-images/product";
 
 type ImageMetadata = {
     [WIDGET_IMAGE_METADATA_KEYS.VARIANTS]?: Record<string, string[]> | undefined;
