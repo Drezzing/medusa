@@ -46,7 +46,11 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
     const handleSave = useCallback(() => {
         updateProduct.mutate(
             {
-                metadata: { ...product.metadata, variantImages: selection, altDescription: altDescription },
+                metadata: {
+                    ...product.metadata,
+                    "imageMetadata-variants": selection,
+                    "imageMetadata-altDescription": altDescription,
+                },
             },
             {
                 onSuccess: () => notify.success("Product variant images updated successfully", ""),
