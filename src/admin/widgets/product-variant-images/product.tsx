@@ -87,13 +87,14 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
     const imageComponents = useMemo(
         () =>
             product.images.map((image) => {
-                const defaultSelection = selection[image.id].map((variantId) => {
-                    const variant = product.variants.find((v) => v.id === variantId);
-                    return {
-                        value: variantId,
-                        label: variant.title,
-                    };
-                });
+                const defaultSelection =
+                    selection[image.id]?.map((variantId) => {
+                        const variant = product.variants.find((v) => v.id === variantId);
+                        return {
+                            value: variantId,
+                            label: variant.title,
+                        };
+                    }) || [];
 
                 const defaultAltDescription = altDescription[image.id] || "";
 
@@ -133,7 +134,11 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
         <div key="product-variants-images" className="rounded-lg border border-gray-200 bg-white p-8">
             <h1 className="text-grey-90 inter-xlarge-semibold mb-base">Product Variant Images</h1>
 
-            <div className="space-y-4">{imageComponents}</div>
+            {product.images.length > 0 ? (
+                <div className="space-y-4">{imageComponents}</div>
+            ) : (
+                <div>No images found for this product.</div>
+            )}
 
             <div className="mt-4 flex justify-end">
                 <Button variant="primary" onClick={handleSave}>
