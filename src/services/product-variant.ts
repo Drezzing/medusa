@@ -1,40 +1,57 @@
 import { isString, ProductVariantService as MedusaProductVariantService } from "@medusajs/medusa";
 import { In } from "typeorm";
-import ImageRepository from "@medusajs/medusa/dist/repositories/image";
+
+import {
+    WIDGET_IMAGE_METADATA_KEYS,
+    VariantImages,
+    AltDescription,
+} from "../admin/widgets/product-variant-images/product";
+
+type ProductMetadata = {
+    [WIDGET_IMAGE_METADATA_KEYS.VARIANTS]?: VariantImages | undefined;
+    [WIDGET_IMAGE_METADATA_KEYS.ALT_DESCRIPTION]?: AltDescription | undefined;
+    [x: string]: unknown;
+};
 
 class ProductVariantService extends MedusaProductVariantService {
-    protected readonly imageRepository_: typeof ImageRepository;
-
-    constructor(container) {
-        super(container);
-        this.imageRepository_ = container.imageRepository;
-    }
-
     async delete(variantIds: string | string[]): Promise<void> {
         const variantIds_ = isString(variantIds) ? [variantIds] : variantIds;
         await this.atomicPhase_(async (manager) => {
             const variantRepo = manager.withRepository(this.productVariantRepository_);
-            const imageRepo = manager.withRepository(this.imageRepository_);
+            const productRepo = manager.withRepository(this.productRepository_);
 
             const variants = await variantRepo.find({
                 where: { id: In(variantIds_) },
-                relations: ["product", "product.images"],
+                relations: ["product"],
             });
 
-            const images = variants.map((variant) => variant.product.images).flat();
-            const imagesUpdates = images.map((image) => {
-                if (image.metadata && image.metadata.variants) {
-                    const variantIds = image.metadata.variants as string[];
-                    const newVariants = variantIds.filter((variantId) => !variantIds_.includes(variantId));
-                    return imageRepo.update(image.id, {
-                        metadata: {
-                            variants: newVariants.length ? newVariants : undefined,
-                        },
-                    });
+            const productsUpdates: Record<string, ProductMetadata> = {};
+            for (const variant of variants) {
+                if (productsUpdates[variant.product.id] === undefined) {
+                    productsUpdates[variant.product.id] = variant.product.metadata;
                 }
+            }
+            for (const [productId, productMetadata] of Object.entries(productsUpdates)) {
+                if (productMetadata[WIDGET_IMAGE_METADATA_KEYS.VARIANTS] === undefined) {
+                    continue;
+                }
+                for (const [imageId, variants] of Object.entries(
+                    productMetadata[WIDGET_IMAGE_METADATA_KEYS.VARIANTS],
+                )) {
+                    const newVariants = variants.filter((variantId) => !variantIds_.includes(variantId));
+                    productsUpdates[productId][WIDGET_IMAGE_METADATA_KEYS.VARIANTS][imageId] = newVariants.length
+                        ? newVariants
+                        : undefined;
+                }
+            }
+
+            const updates = Object.entries(productsUpdates).map(async ([productId, productMetata]) => {
+                productRepo.update(productId, {
+                    metadata: productMetata,
+                });
             });
 
-            await Promise.all(imagesUpdates);
+            await Promise.all(updates);
         });
 
         return super.delete(variantIds_);

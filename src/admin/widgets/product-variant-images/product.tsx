@@ -9,8 +9,8 @@ export const WIDGET_IMAGE_METADATA_KEYS = {
     ALT_DESCRIPTION: "imageMetadata-altDescription",
 } as const;
 
-type AltDescription = Record<string, string | undefined>;
-type VariantImages = Record<string, string[] | undefined>;
+export type VariantImages = Record<string, string[] | undefined>;
+export type AltDescription = Record<string, string | undefined>;
 
 const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) => {
     const updateProduct = useAdminUpdateProduct(product.id);
