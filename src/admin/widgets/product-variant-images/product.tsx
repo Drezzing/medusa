@@ -9,6 +9,9 @@ export const WIDGET_IMAGE_METADATA_KEYS = {
     ALT_DESCRIPTION: "imageMetadata-altDescription",
 } as const;
 
+type AltDescription = Record<string, string | undefined>;
+type VariantImages = Record<string, string[] | undefined>;
+
 const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) => {
     const updateProduct = useAdminUpdateProduct(product.id);
 
@@ -22,31 +25,24 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
     );
 
     const currentSelection = useMemo(() => {
-        const selection: Record<string, string[]> = {};
+        const selection: VariantImages = {};
         for (const image of product.images) {
-            if (image.metadata && image.metadata.variants) {
-                selection[image.id] = image.metadata.variants as string[];
-            } else {
-                selection[image.id] = [];
-            }
+            selection[image.id] = product.metadata?.[WIDGET_IMAGE_METADATA_KEYS.VARIANTS]?.[image.id] || undefined;
         }
         return selection;
     }, [product.images]);
 
     const currentAltDescription = useMemo(() => {
-        const altDescription: Record<string, string> = {};
+        const altDescription: AltDescription = {};
         for (const image of product.images) {
-            if (image.metadata && image.metadata.alt_description) {
-                altDescription[image.id] = image.metadata.alt_description as string;
-            } else {
-                altDescription[image.id] = "";
-            }
+            altDescription[image.id] =
+                product.metadata?.[WIDGET_IMAGE_METADATA_KEYS.ALT_DESCRIPTION]?.[image.id] || undefined;
         }
         return altDescription;
     }, [product.images]);
 
-    const [selection, setSelection] = useState<Record<string, string[]>>(currentSelection);
-    const [altDescription, setAltDescription] = useState<Record<string, string>>(currentAltDescription);
+    const [selection, setSelection] = useState<VariantImages>(currentSelection);
+    const [altDescription, setAltDescription] = useState<AltDescription>(currentAltDescription);
 
     const handleSave = useCallback(() => {
         updateProduct.mutate(
@@ -68,7 +64,7 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
         (imageId: string, newValue: MultiValue<{ value: string; label: string }>) => {
             setSelection((prevSelection) => {
                 const updatedSelection = { ...prevSelection };
-                updatedSelection[imageId] = newValue.map((item) => item.value);
+                updatedSelection[imageId] = newValue.length ? newValue.map((item) => item.value) : undefined;
                 return updatedSelection;
             });
         },
@@ -79,7 +75,7 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
         console.log(imageId, newValue);
         setAltDescription((prevAltDescription) => {
             const updatedAltDescription = { ...prevAltDescription };
-            updatedAltDescription[imageId] = newValue;
+            updatedAltDescription[imageId] = newValue || undefined;
             return updatedAltDescription;
         });
     }, []);
