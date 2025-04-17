@@ -5,7 +5,7 @@ import {
     WIDGET_IMAGE_METADATA_KEYS,
     VariantImages,
     AltDescription,
-} from "../admin/widgets/product-variant-images/product";
+} from "../admin/widgets/product-images/product-images";
 
 type ProductMetadata = {
     [WIDGET_IMAGE_METADATA_KEYS.VARIANTS]?: VariantImages | undefined;
