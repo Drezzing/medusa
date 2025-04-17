@@ -4,10 +4,12 @@ import { useAdminUpdateProduct } from "medusa-react";
 import { useCallback, useMemo, useState } from "react";
 import Select, { MultiValue } from "react-select";
 
-export const WIDGET_IMAGE_METADATA_KEYS = {
+export const WIDGET_IMAGE_METADATA = {
     VARIANTS: "imageMetadata-variants",
     ALT_DESCRIPTION: "imageMetadata-altDescription",
 } as const;
+
+type WIDGET_IMAGE_METADATA_KEYS = (typeof WIDGET_IMAGE_METADATA)[keyof typeof WIDGET_IMAGE_METADATA];
 
 export type VariantImages = Record<string, string[] | undefined>;
 export type AltDescription = Record<string, string | undefined>;
@@ -24,21 +26,17 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
         [product.variants],
     );
 
+    const getDefaultSelection = (metadataKey: WIDGET_IMAGE_METADATA_KEYS) => {
+        const selection = product.metadata?.[metadataKey] as VariantImages | AltDescription | undefined;
+        return selection || {};
+    };
+
     const currentSelection = useMemo(() => {
-        const selection: VariantImages = {};
-        for (const image of product.images) {
-            selection[image.id] = product.metadata?.[WIDGET_IMAGE_METADATA_KEYS.VARIANTS]?.[image.id] || undefined;
-        }
-        return selection;
+        return getDefaultSelection(WIDGET_IMAGE_METADATA.VARIANTS) as VariantImages;
     }, [product.images]);
 
     const currentAltDescription = useMemo(() => {
-        const altDescription: AltDescription = {};
-        for (const image of product.images) {
-            altDescription[image.id] =
-                product.metadata?.[WIDGET_IMAGE_METADATA_KEYS.ALT_DESCRIPTION]?.[image.id] || undefined;
-        }
-        return altDescription;
+        return getDefaultSelection(WIDGET_IMAGE_METADATA.ALT_DESCRIPTION) as AltDescription;
     }, [product.images]);
 
     const [selection, setSelection] = useState<VariantImages>(currentSelection);
@@ -49,12 +47,12 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
             {
                 metadata: {
                     ...product.metadata,
-                    [WIDGET_IMAGE_METADATA_KEYS.VARIANTS]: selection,
-                    [WIDGET_IMAGE_METADATA_KEYS.ALT_DESCRIPTION]: altDescription,
+                    [WIDGET_IMAGE_METADATA.VARIANTS]: selection,
+                    [WIDGET_IMAGE_METADATA.ALT_DESCRIPTION]: altDescription,
                 },
             },
             {
-                onSuccess: () => notify.success("Product variant images updated successfully", ""),
+                onSuccess: () => notify.success("Product images updated successfully", ""),
                 onError: (error) => notify.error("Failed to update product variant images", error.message),
             },
         );

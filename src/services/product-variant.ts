@@ -1,15 +1,11 @@
 import { isString, ProductVariantService as MedusaProductVariantService } from "@medusajs/medusa";
 import { In } from "typeorm";
 
-import {
-    WIDGET_IMAGE_METADATA_KEYS,
-    VariantImages,
-    AltDescription,
-} from "../admin/widgets/product-images/product-images";
+import { WIDGET_IMAGE_METADATA, VariantImages, AltDescription } from "../admin/widgets/product-images/product-images";
 
 type ProductMetadata = {
-    [WIDGET_IMAGE_METADATA_KEYS.VARIANTS]?: VariantImages | undefined;
-    [WIDGET_IMAGE_METADATA_KEYS.ALT_DESCRIPTION]?: AltDescription | undefined;
+    [WIDGET_IMAGE_METADATA.VARIANTS]?: VariantImages | undefined;
+    [WIDGET_IMAGE_METADATA.ALT_DESCRIPTION]?: AltDescription | undefined;
     [x: string]: unknown;
 };
 
@@ -32,14 +28,12 @@ class ProductVariantService extends MedusaProductVariantService {
                 }
             }
             for (const [productId, productMetadata] of Object.entries(productsUpdates)) {
-                if (productMetadata[WIDGET_IMAGE_METADATA_KEYS.VARIANTS] === undefined) {
+                if (productMetadata[WIDGET_IMAGE_METADATA.VARIANTS] === undefined) {
                     continue;
                 }
-                for (const [imageId, variants] of Object.entries(
-                    productMetadata[WIDGET_IMAGE_METADATA_KEYS.VARIANTS],
-                )) {
+                for (const [imageId, variants] of Object.entries(productMetadata[WIDGET_IMAGE_METADATA.VARIANTS])) {
                     const newVariants = variants.filter((variantId) => !variantIds_.includes(variantId));
-                    productsUpdates[productId][WIDGET_IMAGE_METADATA_KEYS.VARIANTS][imageId] = newVariants.length
+                    productsUpdates[productId][WIDGET_IMAGE_METADATA.VARIANTS][imageId] = newVariants.length
                         ? newVariants
                         : undefined;
                 }
