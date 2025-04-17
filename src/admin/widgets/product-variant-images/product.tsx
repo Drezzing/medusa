@@ -72,7 +72,6 @@ const ProductVariantImages = ({ product, notify }: ProductDetailsWidgetProps) =>
     );
 
     const handleAltDescriptionChange = useCallback((imageId: string, newValue: string) => {
-        console.log(imageId, newValue);
         setAltDescription((prevAltDescription) => {
             const updatedAltDescription = { ...prevAltDescription };
             updatedAltDescription[imageId] = newValue || undefined;
