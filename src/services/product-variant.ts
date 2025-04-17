@@ -45,9 +45,9 @@ class ProductVariantService extends MedusaProductVariantService {
                 }
             }
 
-            const updates = Object.entries(productsUpdates).map(async ([productId, productMetata]) => {
+            const updates = Object.entries(productsUpdates).map(async ([productId, productMetadata]) => {
                 productRepo.update(productId, {
-                    metadata: productMetata,
+                    metadata: productMetadata,
                 });
             });
 
