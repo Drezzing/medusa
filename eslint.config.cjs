@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-
 const js = require("@eslint/js");
 const ts = require("typescript-eslint");
 const prettier = require("eslint-config-prettier");
@@ -16,6 +14,12 @@ module.exports = [
                 ...globals.browser,
                 ...globals.node,
             },
+        },
+    },
+    {
+        files: ["**/*.cjs"],
+        rules: {
+            "@typescript-eslint/no-require-imports": "off",
         },
     },
     {
