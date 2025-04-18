@@ -1,4 +1,4 @@
-FROM node:20.16-alpine AS builder
+FROM node:22.14-alpine AS builder
 
 WORKDIR /backend
 COPY package*.json .
@@ -12,7 +12,7 @@ RUN npm run build
 RUN npm prune --omit=dev
 
 
-FROM node:20.16-alpine
+FROM node:22.14-alpine
 WORKDIR /backend
 COPY --from=builder /backend/ .
 
