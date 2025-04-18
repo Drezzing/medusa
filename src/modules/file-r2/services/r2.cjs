@@ -6,6 +6,7 @@ const { Readable, PassThrough } = require("stream");
 
 const {
     DeleteObjectCommand,
+    ListObjectsV2Command,
     GetObjectCommand,
     ObjectCannedACL,
     PutObjectCommand,
@@ -146,6 +147,41 @@ class R2StorageService extends AbstractFileService {
         } catch (err) {
             console.error(err);
             throw new Error("An error occurred while deleting the file.");
+        }
+    }
+
+    /**
+     * This method is used to lists the contents of a directory in the storage.
+     *
+     * @param {string} directory - The directory path to list.
+     *
+     * @returns {Promise<Array<{ key: string, lastModified: Date, size: number }>>}
+     * An array of objects representing the contents of the directory,
+     */
+    async list(directory = "") {
+        const client = this.storageClient();
+        const params = {
+            Bucket: this.bucket,
+            Prefix: directory,
+        };
+
+        try {
+            const { Contents } = await client.send(new ListObjectsV2Command(params));
+            if (!Contents) {
+                return [];
+            }
+            const res = Contents.map((item) => {
+                return {
+                    key: item.Key,
+                    lastModified: item.LastModified,
+                    size: item.Size,
+                };
+            });
+
+            return res;
+        } catch (err) {
+            console.error(err);
+            throw new Error("An error occurred while listing the directory.");
         }
     }
 
