@@ -101,7 +101,7 @@ const modules = {
         },
     },
     fileService: {
-        resolve: "./src/modules/file-r2/index.js",
+        resolve: "./src/modules/file-r2/index.cjs",
         /** @type {import("./src/modules/file-r2/services/r2.cjs").R2StorageServiceOptions} */
         options: {
             bucket: process.env.R2_BUCKET_NAME,

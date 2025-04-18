@@ -1,13 +1,19 @@
 // @ts-check
 
-import { createReadStream } from "fs";
-import { parse } from "path";
-import { Readable, PassThrough } from "stream";
+const { createReadStream } = require("fs");
+const { parse } = require("path");
+const { Readable, PassThrough } = require("stream");
 
-import { DeleteObjectCommand, GetObjectCommand, ObjectCannedACL, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { AbstractFileService } from "@medusajs/medusa";
+const {
+    DeleteObjectCommand,
+    GetObjectCommand,
+    ObjectCannedACL,
+    PutObjectCommand,
+    S3Client,
+} = require("@aws-sdk/client-s3");
+const { Upload } = require("@aws-sdk/lib-storage");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { AbstractFileService } = require("@medusajs/medusa");
 
 /**
  * @typedef {Object} R2StorageServiceOptions
@@ -206,4 +212,4 @@ class R2StorageService extends AbstractFileService {
     }
 }
 
-export default R2StorageService;
+module.exports = R2StorageService;
