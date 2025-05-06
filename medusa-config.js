@@ -35,6 +35,7 @@ for (const [key, value] of Object.entries(process.env)) {
 const env = validateEnv(process.env);
 
 const DATABASE_URL = `postgres://${env.POSTGRES_USER}:${env.POSTGRES_PASSWORD}@${env.POSTGRES_HOST}:${env.POSTGRES_PORT}/${env.POSTGRES_DB}`;
+const FROM_EMAIL = `DreZZing <${env.SMTP_FROM_EMAIL}>`;
 
 const plugins = [
     {
@@ -62,7 +63,7 @@ const plugins = [
     {
         resolve: "medusa-plugin-smtp",
         options: {
-            fromEmail: env.SMTP_FROM_EMAIL,
+            fromEmail: FROM_EMAIL,
             transport: {
                 host: env.SMTP_HOST,
                 port: env.SMTP_PORT,
