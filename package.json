@@ -16,7 +16,7 @@
         "clean": "cross-env ./node_modules/.bin/rimraf dist",
         "build": "cross-env npm run clean && npm run build:server && npm run build:admin",
         "build:server": "cross-env npm run clean && tsc -p tsconfig.server.json",
-        "build:admin": "cross-env medusa-admin build",
+        "build:admin": "ADMIN_BUILD=true cross-env medusa-admin build",
         "watch": "cross-env tsc --watch",
         "test": "cross-env jest",
         "seed": "cross-env medusa seed -f ./data/seed.json",
@@ -47,7 +47,8 @@
         "medusa-plugin-smtp": "^1.2.0",
         "prism-react-renderer": "^2.4.1",
         "react-select": "^5.10.1",
-        "typeorm": "^0.3.22"
+        "typeorm": "^0.3.22",
+        "zod": "^3.24.4"
     },
     "devDependencies": {
         "@babel/cli": "^7.14.3",
