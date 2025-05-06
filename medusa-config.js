@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { config } = require("dotenv");
 const { readFileSync } = require("fs");
+const { validateEnv } = require("./medusa-env.cjs");
 
 let ENV_FILE_NAME = "";
 switch (process.env.NODE_ENV) {
@@ -31,19 +32,14 @@ for (const [key, value] of Object.entries(process.env)) {
     }
 }
 
-// CORS when consuming Medusa from admin
-const ADMIN_CORS = process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
+const env = validateEnv(process.env);
 
-// CORS to avoid issues when consuming Medusa from a client
-const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
-
-// const DATABASE_URL = process.env.DATABASE_URL || "postgres://localhost/medusa-starter-default";
-const DATABASE_URL = `postgres://${process.env.POSTGRES_USER}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${process.env.POSTGRES_DB}`;
-
-const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const DATABASE_URL = `postgres://${env.POSTGRES_USER}:${env.POSTGRES_PASSWORD}@${env.POSTGRES_HOST}:${env.POSTGRES_PORT}/${env.POSTGRES_DB}`;
 
 const plugins = [
-    `medusa-fulfillment-manual`,
+    {
+        resolve: "medusa-fullfillment-manual",
+    },
     {
         resolve: "@medusajs/admin",
         /** @type {import('@medusajs/admin').PluginOptions} */
@@ -58,23 +54,22 @@ const plugins = [
         resolve: `medusa-payment-stripe`,
         /** @type {import('medusa-payment-stripe').StripeOptions} */
         options: {
-            api_key: process.env.STRIPE_API_KEY,
+            api_key: env.STRIPE_API_KEY,
             automatic_payment_methods: true,
-            // webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+            webhook_secret: env.STRIPE_WEBHOOK_SECRET,
         },
     },
     {
         resolve: "medusa-plugin-smtp",
-
         options: {
-            fromEmail: process.env.SMTP_FROM_EMAIL,
+            fromEmail: env.SMTP_FROM_EMAIL,
             transport: {
-                host: process.env.SMTP_HOST,
-                port: process.env.SMTP_PORT,
+                host: env.SMTP_HOST,
+                port: env.SMTP_PORT,
                 secure: false,
                 auth: {
-                    user: process.env.SMTP_AUTH_USER,
-                    pass: process.env.SMTP_AUTH_PASS,
+                    user: env.SMTP_AUTH_USER,
+                    pass: env.SMTP_AUTH_PASS,
                 },
             },
             emailTemplatePath: "data/emailTemplates",
@@ -90,38 +85,39 @@ const modules = {
     eventBus: {
         resolve: "@medusajs/event-bus-redis",
         options: {
-            redisUrl: REDIS_URL,
+            redisUrl: env.REDIS_URL,
         },
     },
     cacheService: {
         resolve: "@medusajs/cache-redis",
         /** @type {import('@medusajs/cache-redis').RedisCacheModuleOptions} */
         options: {
-            redisUrl: REDIS_URL,
-            redisOptions: {},
+            redisUrl: env.REDIS_URL,
         },
     },
     fileService: {
         resolve: "./src/modules/file-r2/index.cjs",
         /** @type {import("./src/modules/file-r2/services/r2.cjs").R2StorageServiceOptions} */
         options: {
-            bucket: process.env.R2_BUCKET_NAME,
-            endpoint: process.env.R2_BUCKET_ENDPOINT,
-            access_key: process.env.R2_BUCKET_ACCESS_KEY,
-            secret_key: process.env.R2_BUCKET_SECRET_KEY,
-            public_url: process.env.R2_BUCKET_PUBLIC_URL,
+            bucket: env.R2_BUCKET_NAME,
+            endpoint: env.R2_BUCKET_ENDPOINT,
+            access_key: env.R2_BUCKET_ACCESS_KEY,
+            secret_key: env.R2_BUCKET_SECRET_KEY,
+            public_url: env.R2_BUCKET_PUBLIC_URL,
         },
     },
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
 const projectConfig = {
+    store_cors: env.MEDUSA_CORS,
+    admin_cors: env.MEDUSA_CORS,
+    auth_cors: env.MEDUSA_CORS,
+    database_url: DATABASE_URL,
+    database_logging: ["error", "warn"],
+    redis_url: env.REDIS_URL,
     jwt_secret: process.env.JWT_SECRET || "supersecret",
     cookie_secret: process.env.COOKIE_SECRET || "supersecret",
-    store_cors: STORE_CORS,
-    database_url: DATABASE_URL,
-    admin_cors: ADMIN_CORS,
-    redis_url: REDIS_URL,
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */

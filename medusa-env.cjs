@@ -1,15 +1,12 @@
-import { z } from "zod";
+const { z } = require("zod");
 
 const envSchema = z.object({
-    NODE_ENV: z.enum(["development", "production", "test"]),
-
-    ADMIN_CORS: z.string(),
-    STORE_CORS: z.string(),
+    MEDUSA_CORS: z.string(),
 
     POSTGRES_USER: z.string(),
     POSTGRES_PASSWORD: z.string(),
     POSTGRES_HOST: z.string(),
-    POSTGRES_PORT: z.number().int().positive(),
+    POSTGRES_PORT: z.number({ coerce: true }).int().positive(),
     POSTGRES_DB: z.string(),
 
     REDIS_URL: z.string(),
@@ -26,15 +23,19 @@ const envSchema = z.object({
 
     SMTP_FROM_EMAIL: z.string(),
     SMTP_HOST: z.string(),
-    SMTP_PORT: z.number().int().positive(),
+    SMTP_PORT: z.number({ coerce: true }).int().positive(),
     SMTP_AUTH_USER: z.string(),
     SMTP_AUTH_PASS: z.string(),
 });
 
-export const validateEnv = (env: Record<string, unknown>) => {
+const validateEnv = (env) => {
     const parsed = envSchema.safeParse(env);
     if (!parsed.success) {
         console.error("Invalid environment variables:", parsed.error.format());
         process.exit(1);
     }
+
+    return parsed.data;
 };
+
+module.exports = { validateEnv };
