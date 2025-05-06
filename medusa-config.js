@@ -39,7 +39,7 @@ const FROM_EMAIL = `DreZZing <${env.SMTP_FROM_EMAIL}>`;
 
 const plugins = [
     {
-        resolve: "medusa-fullfillment-manual",
+        resolve: "medusa-fulfillment-manual",
     },
     {
         resolve: "@medusajs/admin",

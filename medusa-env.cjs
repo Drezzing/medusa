@@ -28,8 +28,20 @@ const envSchema = z.object({
     SMTP_AUTH_PASS: z.string().nonempty(),
 });
 
+/**
+ * Validates the environment variables using zod schema.
+ * @param {Record<string, any>} env
+ * @returns {z.infer<typeof envSchema>}
+ */
 const validateEnv = (env) => {
+    // Building the admin panel loads config and so run env validation
+    // but env variables are not available during build, so we skip validation
+    if (process.env.ADMIN_BUILD === "true") {
+        return env;
+    }
+
     const parsed = envSchema.safeParse(env);
+
     if (!parsed.success) {
         console.error("Invalid environment variables:", parsed.error.format());
         process.exit(1);
