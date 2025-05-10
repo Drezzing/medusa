@@ -24,7 +24,7 @@ config({ path: process.cwd() + "/" + ENV_FILE_NAME });
 for (const [key, value] of Object.entries(process.env)) {
     if (key.endsWith("_FILE")) {
         try {
-            process.env[key.slice(0, -5)] = readFileSync(value, "utf8");
+            process.env[key.slice(0, -5)] = readFileSync(value, "utf8").trim();
             delete process.env[key];
         } catch {
             throw new Error(`Could not read file ${value} for env variable ${key}`);
