@@ -105,11 +105,5 @@
     "resolutions": {
         "glob": "^7.1.6"
     },
-    "devEngines": {
-        "packageManager": {
-            "name": "bun",
-            "version": "^1.2.13",
-            "onFail": "error"
-        }
-    }
+    "packageManager": "bun@1.2.13"
 }
