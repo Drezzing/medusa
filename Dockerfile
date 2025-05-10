@@ -4,6 +4,7 @@ WORKDIR /backend
 COPY package*.json .
 COPY patches/* patches/
 RUN npm ci
+RUN npm run patch
 COPY . .
 
 ENV NODE_ENV=production

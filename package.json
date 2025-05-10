@@ -25,7 +25,7 @@
         "dev": "cross-env npm run build:server && medusa develop",
         "lint": "prettier --check . && eslint .",
         "format": "prettier --write .",
-        "postintall": "patch-package"
+        "patch": "patch-package"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.772.0",
