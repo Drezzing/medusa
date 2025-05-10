@@ -7,7 +7,6 @@ COPY patches/* patches/
 
 RUN npm i -g bun
 RUN bun install --frozen-lockfile
-RUN npm run patch
 
 COPY . .
 ENV NODE_ENV=production
