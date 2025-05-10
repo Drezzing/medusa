@@ -1,16 +1,21 @@
 FROM node:22.14-alpine AS builder
-
 WORKDIR /backend
-COPY package*.json .
-COPY patches/* patches/
-RUN npm ci
-RUN npm run patch
-COPY . .
 
+COPY package.json .
+COPY bun.lock .
+COPY patches/* patches/
+
+RUN npm i -g bun
+RUN bun install --frozen-lockfile
+RUN npm run patch
+
+COPY . .
 ENV NODE_ENV=production
 RUN npm run build
 
-RUN npm prune --omit=dev
+# bun does not have a prune command
+# since bun has global cache, cost is very low
+RUN rm -rf node_modules &&  bun install --frozen-lockfile --production
 
 
 FROM node:22.14-alpine
