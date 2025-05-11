@@ -45,7 +45,10 @@ const plugins = [
         resolve: "@medusajs/admin",
         /** @type {import('@medusajs/admin').PluginOptions} */
         options: {
-            autoRebuild: true,
+            // Rebuild happens when deploying new image, causing downtime.
+            // This seemes to happen because of the patches, but after testing, it seemes that the patches are already
+            // included in the production build so rebuild is useless.
+            autoRebuild: process.env.NODE_ENV !== "production",
             develop: {
                 open: process.env.OPEN_BROWSER !== "false",
             },
