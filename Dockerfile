@@ -14,8 +14,8 @@ RUN npm run build
 
 # bun does not have a prune command
 # since bun has global cache, cost is very low
-RUN rm -rf node_modules &&  bun install --frozen-lockfile --production
-
+RUN rm -rf node_modules && bun install --frozen-lockfile --production
+RUN wget -qO- https://gobinaries.com/tj/node-prune | /bin/sh && node-prune
 
 FROM node:22.14-alpine
 WORKDIR /backend
