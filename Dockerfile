@@ -21,6 +21,9 @@ FROM node:22.14-alpine
 WORKDIR /backend
 COPY --from=builder /backend/ .
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s \
+    CMD wget --spider -nv -t1 http://localhost:9000/health || exit 1
+
 EXPOSE 7000
 ENV NODE_ENV=production
 CMD [ "npx", "medusa", "start" ]
