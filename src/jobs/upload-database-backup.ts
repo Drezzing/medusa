@@ -41,7 +41,7 @@ export default async function uploadDatabaseBackup({ container }: ScheduledJobAr
     const remoteUploads = toUpload.map(async (file) => {
         const writeStreamDescriptor = await privateBucket.getUploadStreamDescriptor({
             name: file.slice(0, -4),
-            ext: ".age",
+            ext: "age",
             isPrivate: true,
         });
         const readStream = fs.createReadStream(BACKUP_CONFIG.BACKUP_DIR + "/" + file);
