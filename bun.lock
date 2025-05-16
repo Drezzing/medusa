@@ -54,6 +54,7 @@
     },
   },
   "patchedDependencies": {
+    "medusa-plugin-smtp@1.2.0": "patches/medusa-plugin-smtp@1.2.0.patch",
     "@medusajs/admin-ui@2.1.18": "patches/@medusajs%2Fadmin-ui@2.1.18.patch",
     "@medusajs/admin@7.1.18": "patches/@medusajs%2Fadmin@7.1.18.patch",
   },

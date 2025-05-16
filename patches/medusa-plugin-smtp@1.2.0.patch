@@ -1,0 +1,22 @@
+diff --git a/node_modules/medusa-plugin-smtp/.bun-tag-212f64609e60547c b/.bun-tag-212f64609e60547c
+new file mode 100644
+index 0000000000000000000000000000000000000000..e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+diff --git a/services/smtp.js b/services/smtp.js
+index 61715dc130f334639ec0bf102812e9cbdd98db1f..1576b445364e0fc218643cae339b5e971230a562 100644
+--- a/services/smtp.js
++++ b/services/smtp.js
+@@ -418,12 +418,12 @@ var SmtpService = /*#__PURE__*/function (_NotificationService) {
+               });
+               _context5.next = 4;
+               return email.send({
+-                template: templateName,
++                template: options.templateName,
+                 message: {
+                   to: options.to
+                 },
+                 locals: {
+-                  data: options,
++                  data: options.data,
+                   env: process.env
+                 }
+               }).then(function () {
