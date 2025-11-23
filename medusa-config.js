@@ -48,7 +48,8 @@ const plugins = [
             // Rebuild happens when deploying new image, causing downtime.
             // This seemes to happen because of the patches, but after testing, it seemes that the patches are already
             // included in the production build so rebuild is useless.
-            autoRebuild: process.env.NODE_ENV !== "production",
+            // autoRebuild: process.env.NODE_ENV !== "production",
+            autoRebuild: false,
             develop: {
                 open: process.env.OPEN_BROWSER !== "false",
             },
@@ -80,6 +81,7 @@ const plugins = [
             templateMap: {
                 "order.placed": "orderplaced",
                 "invite.created": "invitecreated",
+                "order.shipment_created": "ordershipped",
             },
         },
     },

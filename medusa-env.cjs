@@ -26,6 +26,11 @@ const envSchema = z.object({
     SMTP_PORT: z.number({ coerce: true }).int().positive(),
     SMTP_AUTH_USER: z.string().nonempty(),
     SMTP_AUTH_PASS: z.string().nonempty(),
+
+    SHIPPING_AES_KEY: z.string().length(32),
+    MONDIAL_RELAY_API2_LOGIN: z.string(),
+    MONDIAL_RELAY_API2_PASSWORD: z.string(),
+    MONDIAL_RELAY_API2_BRAND_ID: z.string(),
 });
 
 /**
