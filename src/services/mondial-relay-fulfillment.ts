@@ -74,14 +74,14 @@ class MondialRelayFulfillmentService extends AbstractFulfillmentService {
     async validateFulfillmentData(
         optionData: { [x: string]: unknown },
         data: { [x: string]: unknown },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         cart: Cart,
     ): Promise<Record<string, unknown>> {
-        console.log("validate option: ", optionData, data, cart);
         return data;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async validateOption(data: { [x: string]: unknown }): Promise<boolean> {
-        console.log("validate option: ", data);
         return true;
     }
 
@@ -162,19 +162,17 @@ class MondialRelayFulfillmentService extends AbstractFulfillmentService {
         const cartData = this.getShippingData(cart);
 
         let totalWeight = 0;
-        // let contentDescription = "";  // Max 40 chars, how to handle?
         for (const item of items) {
             const itemWeight = this.getItemWeight(item);
 
-            if (itemWeight === -1) {
+            if (itemWeight === 0) {
                 throw new MedusaError(
                     MedusaError.Types.INVALID_DATA,
-                    `Product variant ${item.variant.product.title} (${item.variant.title}) does not have a weight set.`,
+                    `Product ${item.variant.product.title} (${item.variant.title}) is not marked as shippable.`,
                 );
             }
 
             totalWeight += itemWeight;
-            // contentDescription += `${item.title} - ${item.description.replace(" / ", ",")} x ${item.quantity}\n`;
         }
 
         let recipentData: RecipentData;
@@ -219,7 +217,7 @@ class MondialRelayFulfillmentService extends AbstractFulfillmentService {
                 ParcelCount: "1",
                 Parcels: {
                     Parcel: {
-                        Content: "Articles de Drezzing.fr",
+                        Content: "Commande DreZZing " + order.id.split("_")[1],
                         Weight: { Value: totalWeight, Unit: "gr" },
                     },
                 },
@@ -250,10 +248,8 @@ class MondialRelayFulfillmentService extends AbstractFulfillmentService {
         return { shipment_number: shipment.sendingNumber, label_url: shipment.etiquetteLink };
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     async cancelFulfillment(fulfillment: { [x: string]: unknown }): Promise<any> {
-        console.log(fulfillment);
-
         // throw new Error("Method not implemented.");
     }
 
@@ -283,6 +279,10 @@ class MondialRelayFulfillmentService extends AbstractFulfillmentService {
     }
 
     getPrice(weight: number, priceTable: Record<number, number | null>): number | null {
+        if (weight <= 0) {
+            return null;
+        }
+
         const sortedWeights = Object.keys(priceTable)
             .map(Number)
             .sort((a, b) => a - b);
