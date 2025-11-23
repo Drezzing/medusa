@@ -1,15 +1,13 @@
+include ../components.pug
+
 doctype html
 html(lang="fr")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport" content="width=device-width, initial-scale=1.0")
-        title Invitation à rejoindre DreZZing
-    body(style="font-family: Arial, sans-serif; margin: 0; padding: 0;")
+    +drezzingHeader('Invitation à rejoindre DreZZing')
+    body
         - var inviteLink = "https://admin.drezzing.fr/app/invite?token=" + data.token
 
-        div(style="max-width: 700px; margin: auto; padding: 4px;")
-            p Bonjour,
-            p Vous avez été invité à rejoindre DreZZing, cliquez sur le lien ci-dessous pour accepter l'invitation :
-            a(href=inviteLink) #{inviteLink}
+        p Bonjour,
+        p Vous avez été invité à rejoindre DreZZing, cliquez sur le lien ci-dessous pour accepter l'invitation :
+        a(href=inviteLink) #{inviteLink}
 
-            include ../footer.pug
+        include ../footer.pug
