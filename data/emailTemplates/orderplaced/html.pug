@@ -10,13 +10,18 @@ html(lang="fr")
 
         p Bonjour #{data.customer.first_name},
         p Nous avons bien reçu votre commande et elle est en cours de traitement.
-        div(style="margin-top: 4px;")
-            p(style="margin: 1px") Commande #{orderID}
-            p(style="margin: 1px") Passée le #{dateDay} à #{dateTime}
-            p(style="margin-bottom: 2px;") Contenu de la commande :
-            ul(style="margin-top: 2px;")
+        div
+            p(style="margin: 0px") Commande #{orderID}
+            p(style="margin: 0px") Passée le #{dateDay} à #{dateTime}
+
+            p(style="margin-bottom: 0px;") Contenu de la commande :
+            ul(style="margin-top: 4px;")
                 each item in data.items
                     li #{item.title} (#{item.description}) - Quantité : #{item.quantity}
-        p(style="margin-top: 4px;") Total : #{data.total}
+
+        p(style="margin-top: 4px; margin-bottom: 0px") Sous-total : #{data.subtotal}
+        p(style="margin: 0px;") Livraison : #{data.shipping_total}
+        p(style="margin: 0px;") Réduction : #{data.discount_total}
+        p(style="margin: 0px;") Total : #{data.total}
 
         include ../footer.pug
