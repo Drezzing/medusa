@@ -1,0 +1,16 @@
+include ../components.pug
+
+doctype html
+html(lang="fr")
+    +drezzingHeader('Votre commande a été expédiée !')
+    body
+        - var orderID = data.order.id.split("_")[1]
+        - var trackingNumber = data.fulfillment.data.shipment_number
+        - var trackingLink = `https://www.mondialrelay.com/public/permanent/tracking.aspx?ens=${process.env.MONDIAL_RELAY_API2_BRAND_ID}&exp=${trackingNumber}&language=fr`
+
+        p Bonjour #{data.order.customer.first_name},
+        p Votre commande #{orderID} a été expédiée ! Vous devriez la recevoir sous peu.
+        p Pour suivre votre colis, vous pouvez utiliser <a href=#{trackingLink} target="_blank">ce lien</a>.
+        p Alternativement, vous pouvez vous rendre sur la <a href="https://www.mondialrelay.fr/suivi-de-colis/" traget="_blank">page de suivi</a> de Mondial Relay et utiliser le numéro de suivi : #{trackingNumber}.
+
+        include ../footer.pug
