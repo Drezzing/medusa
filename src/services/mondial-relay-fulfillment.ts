@@ -217,7 +217,7 @@ class MondialRelayFulfillmentService extends AbstractFulfillmentService {
                 ParcelCount: "1",
                 Parcels: {
                     Parcel: {
-                        Content: "Commande DreZZing " + order.id.split("_")[1],
+                        Content: "DreZZing " + order.id.split("_")[1],
                         Weight: { Value: totalWeight, Unit: "gr" },
                     },
                 },
