@@ -1,4 +1,4 @@
-FROM node:22.14-alpine AS builder
+FROM node:22.23.4-alpine3.24 AS builder
 WORKDIR /backend
 
 COPY package.json .
@@ -17,7 +17,7 @@ RUN npm run build
 RUN rm -rf node_modules && bun install --frozen-lockfile --production
 RUN wget -qO- https://gobinaries.com/tj/node-prune | /bin/sh && node-prune
 
-FROM node:22.14-alpine
+FROM node:22.23.4-alpine3.24
 WORKDIR /backend
 COPY --from=builder /backend/ .
 
